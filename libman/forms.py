@@ -1,5 +1,5 @@
 from django import forms
-from .models import Books, Student, Employer, Issue, Return, SBorrower
+from .models import Books, Student, Employer, Issue, Return, Sborrower
 
 class BookForm(forms.ModelForm):
     class Meta:
@@ -8,7 +8,7 @@ class BookForm(forms.ModelForm):
 
 class BorrowerForm(forms.ModelForm):
     class Meta:
-        model = SBorrower
+        model = Sborrower
         fields = '__all__'
 
 class EmployerForm(forms.ModelForm):

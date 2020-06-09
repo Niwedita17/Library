@@ -60,7 +60,7 @@ class BORROWER(models.Model):
         return self.Fname+" "+self.Lname
 
 
-class SBorrower(BORROWER):
+class Sborrower(BORROWER):
     now = datetime.datetime.now()
     BATCH = [(str(a), str(a)) for a in range(now.year-4, now.year+1)]
     DEPART = (

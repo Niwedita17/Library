@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from .forms import BookForm, BorrowerForm, EmployerForm, IssueForm, ReturnForm
-from .models import User, Books, Student, Employer, Issue, Return, Semester, SBorrower, Librarian
+from .models import User, Books, Student, Employer, Issue, Return, Semester, Sborrower, Librarian
 from django.views.generic import UpdateView, DeleteView
 from django.db.models import Q
 from .decorators import unauthenticated_user, librarian_only, student_only
@@ -55,8 +55,8 @@ def librarian_signup(request):
             group = None
 
         user.groups.add(group)
-        student = Student(student_id=student_id, user=user)
-        student.save()
+        librarian = Librarian(librarian_id=librarian_id, user=user)
+        librarian.save()
         login(request, user)
         return redirect('home')
     else:
@@ -140,10 +140,10 @@ def view_books(request):
 
 
 def view_borrower(request):
-    borrower = SBorrower.objects.order_by('batch')
+    borrower = Sborrower.objects.order_by('batch')
     query = request.GET.get('q')
     if query:
-        borrower = SBorrower.objects.filter(Q(Fname__icontains=query) | Q(Lname__icontains=query) | Q(phone__icontains=query) | Q(depart__icontains=query) | Q(borrower_id__icontains=query))
+        borrower = Sborrower.objects.filter(Q(Fname__icontains=query) | Q(Lname__icontains=query) | Q(phone__icontains=query) | Q(depart__icontains=query) | Q(borrower_id__icontains=query))
     else:
         borrower = Student.objects.order_by('batch')
     return render(request, 'libman/view_borrower.html', {'borrower': borrower})
@@ -156,7 +156,7 @@ def add_borrower(request):
         s_form = BorrowerForm(request.POST)
         if s_form.is_valid():
             s_form.save(commit=True)
-            return redirect('add_borrower')
+            return redirect('view_borrower')
     else:
         s_form = BorrowerForm()
     return render(request, 'libman/add_borrower.html', {'s_form': s_form})
@@ -179,7 +179,7 @@ def add_employer(request):
         e_form = EmployerForm(request.POST)
         if e_form.is_valid():
             e_form.save(commit=True)
-            return redirect('add_employer')
+            return redirect('view_employer')
     else:
         e_form = EmployerForm()
     return render(request, 'libman/add_employer.html', {'e_form': e_form})
