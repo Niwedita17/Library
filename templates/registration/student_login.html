@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
+{% extends 'libman/base.html' %}
+{% load static %}
+{% block title %} Home | LMS {% endblock %}
+{% block b_main %}
 
-  </head>
-  <body>
+  <div style="text-align:center">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
@@ -38,7 +36,8 @@
             </div>
         </div>
     </div>
-  </body>
-</html>
+  </div>
+{% endblock %}
+
 
 

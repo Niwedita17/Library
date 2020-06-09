@@ -204,7 +204,7 @@ def new_issue(request):
             semest = Student.objects.get(student_id=name).semester
             departm = Student.objects.get(student_id=name).depart
             Books.Claimbook(books)
-            return redirect('new_issue')
+            return redirect('view_issue')
     else:
         i_form = IssueForm()
     semest = None
