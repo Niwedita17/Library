@@ -3,7 +3,7 @@
 ### Setting up Django
 - `sudo pip install virtualenv`
 - `python3 -m venv myvenv`
-- `source myvenv/bin/activate'
+- `source myvenv/bin/activate`
 - `pip install Django==1.10`
 
 ### Running the project
