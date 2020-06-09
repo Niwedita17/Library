@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import login_required
 from .forms import BookForm, StudentForm, EmployerForm, IssueForm, ReturnForm
 from .models import Books, Student, Employer, Issue, Return, Semester
 from django.views.generic import UpdateView, DeleteView
 from django.db.models import Q
-from .decorators import unauthenticated_user, allowed_users, admin_only
+from .decorators import unauthenticated_user, librarian_only
 from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 @unauthenticated_user
@@ -29,12 +30,12 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-@login_required(login_url='/login/')
+
 def index(request):
     return render(request, 'libman/home.html')
 
 @login_required(login_url='/login/')
-@allowed_users(allowed_roles=['admin'])
+@librarian_only
 def add_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
@@ -47,7 +48,7 @@ def add_book(request):
 
     return render(request, 'libman/add_book.html', {'form': form})
 
-@login_required(login_url='/login/')
+
 def view_books(request):
     books = Books.objects.order_by('department')
     query = request.GET.get('q')
@@ -57,7 +58,8 @@ def view_books(request):
         books = Books.objects.order_by('department')
     return render(request, 'libman/view_book.html', {'books': books})
 
-@login_required(login_url='/login/')
+
+
 def view_student(request):
     students = Student.objects.order_by('batch')
     query = request.GET.get('q')
@@ -67,8 +69,9 @@ def view_student(request):
         students = Student.objects.order_by('batch')
     return render(request, 'libman/view_student.html', {'students': students})
 
+
 @login_required(login_url='/login/')
-@allowed_users(allowed_roles=['admin'])
+@librarian_only
 def add_student(request):
     if request.method == 'POST':
         s_form = StudentForm(request.POST)
@@ -79,7 +82,7 @@ def add_student(request):
         s_form = StudentForm()
     return render(request, 'libman/add_student.html', {'s_form': s_form})
 
-@login_required(login_url='/login/')
+
 def view_employer(request):
     employer = Employer.objects.order_by('timer')
     query = request.GET.get('q')
@@ -89,8 +92,9 @@ def view_employer(request):
         employer = Employer.objects.order_by('timer')
     return render(request, 'libman/view_employer.html', {'employer': employer})
 
+
 @login_required(login_url='/login/')
-@allowed_users(allowed_roles=['admin'])
+@librarian_only
 def add_employer(request):
     if request.method == 'POST':
         e_form = EmployerForm(request.POST)
@@ -101,13 +105,16 @@ def add_employer(request):
         e_form = EmployerForm()
     return render(request, 'libman/add_employer.html', {'e_form': e_form})
 
+
 @login_required(login_url='/login/')
+@librarian_only
 def view_issue(request):
     issue = Issue.objects.order_by('borrower_name', 'issue_date')
     return render(request, 'libman/view_issue.html', {'issue': issue})
 
+
 @login_required(login_url='/login/')
-@allowed_users(allowed_roles=['admin'])
+@librarian_only
 def new_issue(request):
     if request.method == 'POST':
         i_form = IssueForm(request.POST)
@@ -129,7 +136,7 @@ def new_issue(request):
 
 
 @login_required(login_url='/login/')
-@allowed_users(allowed_roles=['admin'])
+@librarian_only
 def return_book(request):
     if request.method == 'POST':
         r_form = ReturnForm(request.POST)

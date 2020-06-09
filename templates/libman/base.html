@@ -37,9 +37,7 @@
 						<li><a href="{% url 'return_book' %}"><i class="fa fa-bell"></i><span>Return</span><i class="fa fa-angle-right pull-right"></i></a></li>
 					</ul>
 				</div>
-				<div class="footer">
-					<p>LMS - <a href="#">Kantipur City College</a></p>
-				</div>
+
 			</aside>
 
 			<aside class="right-bar">				<div class="row header">
@@ -52,8 +50,13 @@
 	</div>
 	<div class="secondary-menu">
 		<ul>
-			<li class="right"><a href="{% url 'admin:index' %}"><i class="fa fa-user-circle" aria-hidden="true"></i> Admin page</a></li>
+			{% if user.is_authenticated %}
 			<li class="right"><a href="{% url 'logout' %}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> Logout</a></li>
+			{% else %}
+			<li class="right"><a href="{% url 'signup' %}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> SignUp</a></li>
+			<li class="right"><a href="{% url 'login' %}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> LogIn</a></li>
+			{% endif %}
+
 		</ul>
 	</div>
 	<div class="popup-container" id="modal_manually">
