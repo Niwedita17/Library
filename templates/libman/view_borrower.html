@@ -12,7 +12,7 @@
     </form>
   </div>
 
-  {% if sborrowers %}
+  {% if borrower %}
   <table class="layout">
     <thead>
       <th>Borrower ID</th>
@@ -25,7 +25,7 @@
       <th>Batch</th>
       <th>Semester</th>
     </thead>
-  {% for borrower in sborrowers %}
+  {% for borrower in borrower %}
     <tr>
       <td> {{ borrower.borrower_id }}</td>
       <td>{{ borrower.Fname }}</td>

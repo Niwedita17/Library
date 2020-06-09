@@ -145,7 +145,7 @@ def view_borrower(request):
     if query:
         borrower = Sborrower.objects.filter(Q(Fname__icontains=query) | Q(Lname__icontains=query) | Q(phone__icontains=query) | Q(depart__icontains=query) | Q(borrower_id__icontains=query))
     else:
-        borrower = Student.objects.order_by('batch')
+        borrower = Sborrower.objects.order_by('batch')
     return render(request, 'libman/view_borrower.html', {'borrower': borrower})
 
 
