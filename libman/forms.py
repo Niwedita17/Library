@@ -1,14 +1,14 @@
 from django import forms
-from .models import Books, Student, Employer, Issue, Return
+from .models import Books, Student, Employer, Issue, Return, SBorrower
 
 class BookForm(forms.ModelForm):
     class Meta:
         model = Books
         exclude = ['book_id']
 
-class StudentForm(forms.ModelForm):
+class BorrowerForm(forms.ModelForm):
     class Meta:
-        model = Student
+        model = SBorrower
         fields = '__all__'
 
 class EmployerForm(forms.ModelForm):

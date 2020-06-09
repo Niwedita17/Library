@@ -1,8 +1,18 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, validate_email, ValidationError
 import datetime
 
 # Create your models here.
+class Student(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    student_id = models.IntegerField(primary_key=True)
+
+class Librarian(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    librarian_id = models.IntegerField(primary_key=True)
+
+
 #book table
 class Books(models.Model):
     DEPARTMENT = (
@@ -49,7 +59,8 @@ class BORROWER(models.Model):
     def __str__(self):
         return self.Fname+" "+self.Lname
 
-class Student(BORROWER):
+
+class SBorrower(BORROWER):
     now = datetime.datetime.now()
     BATCH = [(str(a), str(a)) for a in range(now.year-4, now.year+1)]
     DEPART = (
@@ -63,7 +74,7 @@ class Student(BORROWER):
         ('PGD', 'PG. Computer Applications'),
         ('MCJ', 'M. Mass Communication and Journalism'),
     )
-    student_id = models.CharField(max_length=20, unique=True)
+    borrower_id = models.CharField(max_length=20, unique=True)
     batch = models.CharField(max_length=4, choices = BATCH)
     depart = models.CharField(max_length=3, choices = DEPART)
     semester = models.CharField(max_length=1)

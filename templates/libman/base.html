@@ -53,8 +53,10 @@
 			{% if user.is_authenticated %}
 			<li class="right"><a href="{% url 'logout' %}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> Logout</a></li>
 			{% else %}
-			<li class="right"><a href="{% url 'signup' %}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> SignUp</a></li>
-			<li class="right"><a href="{% url 'login' %}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> LogIn</a></li>
+			<li class="right"><a href="{% url 'student_signup' %}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> StudentSignUp</a></li>
+			<li class="right"><a href="{% url 'librarian_signup' %}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> LibrarianSignUp</a></li>
+			<li class="right"><a href="{% url 'student_login' %}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> StudentLogIn</a></li>
+			<li class="right"><a href="{% url 'librarian_login' %}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> LibrarianLogIn</a></li>
 			{% endif %}
 
 		</ul>

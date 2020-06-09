@@ -1,40 +1,119 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from .forms import BookForm, StudentForm, EmployerForm, IssueForm, ReturnForm
-from .models import Books, Student, Employer, Issue, Return, Semester
+from .forms import BookForm, BorrowerForm, EmployerForm, IssueForm, ReturnForm
+from .models import User, Books, Student, Employer, Issue, Return, Semester, SBorrower, Librarian
 from django.views.generic import UpdateView, DeleteView
 from django.db.models import Q
-from .decorators import unauthenticated_user, librarian_only
+from .decorators import unauthenticated_user, librarian_only, student_only
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+
 @unauthenticated_user
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
+def student_signup(request):
+    if request.method == "POST":
+        student_id = request.POST['student_id']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        user = User(username=username, first_name=first_name, last_name=last_name, email=email)
+        user.set_password(password)
+        user.save()
+        try:
+            group = Group.objects.get(name='Student')
+        except Group.DoesNotExist:
+            group = None
 
-            raw_password = form.cleaned_data.get('password1')
-
-            user = authenticate(username=username, password=raw_password)
-            group = Group.objects.get(name='Librarian')
-            user.groups.add(group)
-
-            return redirect('login')
+        user.groups.add(group)
+        student = Student(student_id=student_id, user=user)
+        student.save()
+        login(request, user)
+        return redirect('home')
     else:
-        form = UserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form})
+        return render(request, 'registration/student_signup.html')
+
+@unauthenticated_user
+def librarian_signup(request):
+    if request.method == "POST":
+        librarian_id = request.POST['librarian_id']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        user = User(username=username, first_name=first_name, last_name=last_name, email=email)
+        user.set_password(password)
+        user.save()
+        try:
+            group = Group.objects.get(name='Librarian')
+        except Group.DoesNotExist:
+            group = None
+
+        user.groups.add(group)
+        student = Student(student_id=student_id, user=user)
+        student.save()
+        login(request, user)
+        return redirect('home')
+    else:
+        return render(request, 'registration/librarian_signup.html')
+
+
+@unauthenticated_user
+def student_login(request):
+    if request.method == "POST":
+        userid = request.POST['userid']
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                student = get_object_or_404(Student, pk=userid)
+                if student:
+                    login(request, user)
+                    return redirect('home')
+                else:
+                    return render(request, 'student_login.html',
+                                  {'error_message': 'Invalid security credentials'})
+            else:
+                return render(request, 'student_login.html', {'error_message': 'Your account has been disabled'})
+        else:
+            return render(request, 'student_login.html', {'error_message': 'Invalid login'})
+    return render(request, 'registration/student_login.html')
+
+
+@unauthenticated_user
+def librarian_login(request):
+    if request.method == "POST":
+        userid = request.POST['userid']
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                librarian = get_object_or_404(Librarian, pk=userid)
+                if Librarian:
+                    login(request, user)
+                    return redirect('home')
+                else:
+                    return render(request, 'librarian_login.html',
+                                  {'error_message': 'Invalid security credentials'})
+            else:
+                return render(request, 'librarian_login.html', {'error_message': 'Your account has been disabled'})
+        else:
+            return render(request, 'librarian_login.html', {'error_message': 'Invalid login'})
+    return render(request, 'registration/librarian_login.html')
 
 
 def index(request):
     return render(request, 'libman/home.html')
 
-@login_required(login_url='/login/')
+
+@login_required
 @librarian_only
 def add_book(request):
     if request.method == 'POST':
@@ -60,27 +139,27 @@ def view_books(request):
 
 
 
-def view_student(request):
-    students = Student.objects.order_by('batch')
+def view_borrower(request):
+    borrower = SBorrower.objects.order_by('batch')
     query = request.GET.get('q')
     if query:
-        students = Student.objects.filter(Q(Fname__icontains=query) | Q(Lname__icontains=query) | Q(phone__icontains=query) | Q(depart__icontains=query) | Q(student_id__icontains=query))
+        borrower = SBorrower.objects.filter(Q(Fname__icontains=query) | Q(Lname__icontains=query) | Q(phone__icontains=query) | Q(depart__icontains=query) | Q(borrower_id__icontains=query))
     else:
-        students = Student.objects.order_by('batch')
-    return render(request, 'libman/view_student.html', {'students': students})
+        borrower = Student.objects.order_by('batch')
+    return render(request, 'libman/view_borrower.html', {'borrower': borrower})
 
 
-@login_required(login_url='/login/')
+@login_required
 @librarian_only
-def add_student(request):
+def add_borrower(request):
     if request.method == 'POST':
-        s_form = StudentForm(request.POST)
+        s_form = BorrowerForm(request.POST)
         if s_form.is_valid():
             s_form.save(commit=True)
-            return redirect('add_student')
+            return redirect('add_borrower')
     else:
-        s_form = StudentForm()
-    return render(request, 'libman/add_student.html', {'s_form': s_form})
+        s_form = BorrowerForm()
+    return render(request, 'libman/add_borrower.html', {'s_form': s_form})
 
 
 def view_employer(request):
@@ -93,7 +172,7 @@ def view_employer(request):
     return render(request, 'libman/view_employer.html', {'employer': employer})
 
 
-@login_required(login_url='/login/')
+@login_required
 @librarian_only
 def add_employer(request):
     if request.method == 'POST':
@@ -106,15 +185,14 @@ def add_employer(request):
     return render(request, 'libman/add_employer.html', {'e_form': e_form})
 
 
-@login_required(login_url='/login/')
-@librarian_only
+
 def view_issue(request):
     issue = Issue.objects.order_by('borrower_name', 'issue_date')
     return render(request, 'libman/view_issue.html', {'issue': issue})
 
 
-@login_required(login_url='/login/')
-@librarian_only
+@login_required
+@student_only
 def new_issue(request):
     if request.method == 'POST':
         i_form = IssueForm(request.POST)
@@ -136,7 +214,7 @@ def new_issue(request):
 
 
 @login_required(login_url='/login/')
-@librarian_only
+@student_only
 def return_book(request):
     if request.method == 'POST':
         r_form = ReturnForm(request.POST)

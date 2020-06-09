@@ -22,8 +22,10 @@ from django.views.generic import RedirectView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', core_views.redir, name='redirect_view'),
-    url(r'^login/$', auth_views.login, name='login'),
-    url(r'^logout/$', auth_views.logout, {'next_page': '/login/'}, name='logout'),
-    url(r'^signup/$', core_views.signup, name='signup'),
+    url(r'^student_login/$', core_views.student_login, name='student_login'),
+    url(r'^librarian_login/$', core_views.librarian_login, name='librarian_login'),
+    url(r'^logout/$', auth_views.logout, {'next_page': '/library'}, name='logout'),
+    url(r'^student_signup/$', core_views.student_signup, name='student_signup'),
+    url(r'^librarian_signup/$', core_views.librarian_signup, name='librarian_signup'),
     url(r'^library/', include('libman.urls')),
 ]
