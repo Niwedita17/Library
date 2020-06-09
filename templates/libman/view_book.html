@@ -1,0 +1,44 @@
+{% extends 'libman/base.html' %}
+{% load static %}
+{% block title %} View Books {% endblock %}
+{% block b_main %}
+  <div>
+    <a class="add_new button1" href="{% url 'add_book' %}">Add book!</a>
+  </div>
+
+  <div>
+    <form method="GET" action="{% url 'view_books' %}">
+      <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search Book">
+      <input type="submit" value="Search">
+    </form>
+  </div>
+<br>
+  {% if books %}
+  <table class="layout">
+    <thead>
+      <th>Isbn no.</th>
+      <th>Book Name</th>
+      <th>Author Name</th>
+      <th>No of books</th>
+      <th>Book Details</th>
+      <th>Department</th>
+      <th>Publisher</th>
+      <th>Rack No</th>
+    </thead>
+  {% for book in books %}
+    <tr>
+      <td> {{ book.isbn_no }}</td>
+      <td>{{ book.book_name }}</td>
+      <td>{{ book.author_name }}</td>
+      <td>{{ book.no_of_books }}</td>
+      <td>{{ book.book_detail }}</td>
+      <td>{{ book.department }}</td>
+      <td>{{ book.publisher }}</td>
+      <td>{{ book.rack_no }}</td>
+    </tr>
+  {% endfor %}
+</table>
+  {% else %}
+    <p> There are no books registered. </p>
+  {% endif %}
+{% endblock %}

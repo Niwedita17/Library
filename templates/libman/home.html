@@ -1,0 +1,342 @@
+{% extends 'libman/base.html' %}
+{% load static %}
+{% block title %} Home | LMS {% endblock %}
+{% block b_main %}
+
+<div class="row page-heading">
+  <h4>Home</h4>
+</div>
+
+
+<div class="row clearfix">
+
+
+  <div class="row graph_box">
+
+    <div class="row clearfix dashboard-heading">
+      <h3>Total Books Reports</h3>
+    </div>
+
+
+            <div class="row">
+              <noscript>
+                <div class="msg notice"><p>Javascript is required to properly run the application.</p>
+              </noscript>
+            </div>
+            <div id="overview" style="width: 600px; height: 400px; margin:0 auto;"></div>
+                      </div>
+</div>
+
+<div class="row clearfix graph_box">
+  <div class="row clearfix dashboard-heading">
+    <h3>Today's Reports</h3>
+  </div>
+  <div class="row">
+    <div class="col-4 card">
+      <div class="card-box bg-blue">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Today's Fine</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-4 card">
+      <div class="card-box bg-green">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Issued Books</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-4 card">
+      <div class="card-box bg-yellow">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Books Returned</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-4 card">
+      <div class="card-box bg-red">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Books Lost</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row clearfix graph_box">
+  <div class="row clearfix dashboard-heading">
+    <h3>Month's Reports</h3>
+  </div>
+  <div class="row">
+    <div class="col-5 card">
+      <div class="card-box bg-blue">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Current month's fine</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-5 card">
+      <div class="card-box bg-blue">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Total Books</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-5 card">
+      <div class="card-box bg-green">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Issued Books</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-5 card">
+      <div class="card-box bg-yellow">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Books Returned</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-5 card">
+      <div class="card-box bg-red">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Books Lost</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row clearfix graph_box">
+  <div class="row clearfix dashboard-heading">
+    <h3>Year's Reports</h3>
+  </div>
+  <div class="row">
+
+    <div class="col-5 card">
+      <div class="card-box bg-blue">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Current year's fine</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-5 card">
+      <div class="card-box bg-blue">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Total Books</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-5 card">
+      <div class="card-box bg-green">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Issued Books</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-5 card">
+      <div class="card-box bg-yellow">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Books Returned</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-5 card">
+      <div class="card-box bg-red">
+        <div class="card-content">
+          <h3>0</h3>
+          <p>Books Lost</p>
+          <div class="card-icon">
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row clearfix graph_box">
+  <div class="row clearfix dashboard-heading">
+    <h3>Total Record till date</h3>
+  </div>
+
+
+            <div class="row">
+              <noscript>
+                <div class="msg notice"><p>Javascript is required to properly run the application.</p>
+              </noscript>
+            </div>
+            <div id="year" style="width: 1000px; height: 300px; margin:0 auto;"></div>
+                    </div>
+
+
+
+
+
+
+
+</div>
+<script type="text/javascript">
+var element =  document.getElementById('overview');
+var year =  document.getElementById('year');
+if (typeof(element) != 'undefined' && element != null)
+{
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+
+var data = google.visualization.arrayToDataTable([
+['Task', 'Total Books Record'],
+["Total Books",5],
+
+["Books Issued", 2],
+
+["Books Lost", 1],
+
+["Books Returned", 2]
+]);
+
+var options = {
+title: ''
+};
+
+var chart = new google.visualization.PieChart(document.getElementById('overview'));
+
+chart.draw(data, options);
+}
+
+}
+
+if (typeof(year) != 'undefined' && year != null)
+{
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+
+var data = google.visualization.arrayToDataTable([
+['Record', 'Total Record',],
+["Total Books",5],
+
+["Books Issued", 2],
+
+["Books Lost", 1],
+
+["Books Returned", 2],
+
+["Total Students", 2],
+
+["Total Members", 2]
+]);
+
+var options = {
+title: 'Total Record till date',
+chartArea: {width: '60%'},
+hAxis: {
+title: 'Total Record',
+minValue: 0
+},
+vAxis: {
+title: ''
+}
+};
+
+var chart = new google.visualization.BarChart(document.getElementById('year'));
+
+chart.draw(data, options);
+}
+}
+</script>
+
+
+        <div class="footer"><p>&copy; 2018.  Kantipur City College<em class="address"> | Putalisadak, Kathmandu</em></p></div>
+</div>
+
+{% endblock %}

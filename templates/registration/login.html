@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  </head>
+  <body>
+  <h2 style="text-align: center; color:#ff4400;">Login to Library Management System</h2>
+
+  <div>
+    <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+      <button type="submit">Login</button>
+      {% for message in messages %}
+					<p id="messages">{{message}}</p>
+				{% endfor %}
+
+				<div class="mt-4">
+					<div class="d-flex justify-content-center links">
+						Don't have an account? <a href="{% url 'signup' %}" class="ml-2">Sign Up</a>
+					</div>
+
+				</div>
+    </form>
+  </div>
+
+
+
+  </body>
+</html>
