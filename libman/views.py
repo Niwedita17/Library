@@ -113,7 +113,7 @@ def index(request):
     return render(request, 'libman/home.html')
 
 
-@login_required
+@login_required(login_url='/librarian_login/')
 @librarian_only
 def add_book(request):
     if request.method == 'POST':
@@ -149,7 +149,7 @@ def view_borrower(request):
     return render(request, 'libman/view_borrower.html', {'borrower': borrower})
 
 
-@login_required
+@login_required(login_url='/librarian_login/')
 @librarian_only
 def add_borrower(request):
     if request.method == 'POST':
@@ -172,7 +172,7 @@ def view_employer(request):
     return render(request, 'libman/view_employer.html', {'employer': employer})
 
 
-@login_required
+@login_required(login_url='/librarian_login/')
 @librarian_only
 def add_employer(request):
     if request.method == 'POST':
@@ -191,7 +191,7 @@ def view_issue(request):
     return render(request, 'libman/view_issue.html', {'issue': issue})
 
 
-@login_required
+@login_required(login_url='/student_login/')
 @student_only
 def new_issue(request):
     if request.method == 'POST':
@@ -213,7 +213,7 @@ def new_issue(request):
     return render(request, 'libman/new_issue.html', {'i_form': i_form, 'sem_book': sem_book})
 
 
-@login_required(login_url='/login/')
+@login_required(login_url='/student_login/')
 @student_only
 def return_book(request):
     if request.method == 'POST':
