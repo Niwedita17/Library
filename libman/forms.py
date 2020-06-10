@@ -4,7 +4,7 @@ from .models import Books, Student, Employer, Issue, Return, Sborrower
 class BookForm(forms.ModelForm):
     class Meta:
         model = Books
-        exclude = ['book_id']
+        fields = '__all__'
 
 class BorrowerForm(forms.ModelForm):
     class Meta:
@@ -17,17 +17,11 @@ class EmployerForm(forms.ModelForm):
         fields = '__all__'
 
 class IssueForm(forms.ModelForm):
-    borrower_name = forms.CharField(
-         required=False,
-     )
-    book_name = forms.CharField(
-         required=False,
-     )
     class Meta:
         model = Issue
-        exclude = ['issue_date', 'issue_id', 'book_id']
+        exclude = ['issue_date', 'issue_id']
 
 class ReturnForm(forms.ModelForm):
     class Meta:
         model = Return
-        exclude = ['return_id', 'return_date', 'book_id', 'borrower_name', 'book_name']
+        exclude = ['return_id', 'return_date']

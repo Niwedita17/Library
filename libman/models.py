@@ -22,9 +22,8 @@ class Books(models.Model):
         ('BBS', 'Business'),
         ('MSC', 'Miscellaneous'),
     )
-    isbn_no = models.CharField(max_length=20, blank=True)
     barcode = models.CharField(max_length=20, unique=True)
-    book_id = models.CharField(max_length=20)
+    book_id = models.CharField(max_length=20, primary_key=True)
     book_name = models.CharField(max_length=200)
     author_name = models.CharField(max_length=100)
     no_of_books = models.IntegerField()
@@ -74,7 +73,7 @@ class Sborrower(BORROWER):
         ('PGD', 'PG. Computer Applications'),
         ('MCJ', 'M. Mass Communication and Journalism'),
     )
-    borrower_id = models.CharField(max_length=20, unique=True)
+    borrower_id = models.CharField(max_length=20, primary_key=True)
     batch = models.CharField(max_length=4, choices = BATCH)
     depart = models.CharField(max_length=3, choices = DEPART)
     semester = models.CharField(max_length=1)
@@ -95,24 +94,18 @@ class Employer(BORROWER):
 
 class Issue(models.Model):
     borrower_id = models.CharField(max_length=20)
-    borrower_name = models.CharField(max_length=100)
-    book_name = models.CharField(max_length = 200)
     book_id = models.CharField(max_length=20)
     issue_date = models.DateField(default=datetime.date.today)
     issue_id = models.CharField(max_length=20)
-    isbn = models.CharField(max_length=20, blank=True, null=True)
 
     def __str__(self):
         return self.book_name
 
 class Return(models.Model):
-    return_id = models.CharField(max_length=20)
-    return_date = models.DateField(default=datetime.date.today)
     borrower_id = models.CharField(max_length=20)
-    borrower_name = models.CharField(max_length = 100)
     book_id = models.CharField(max_length=20)
-    book_name= models.CharField(max_length=200)
-    isbn_no = models.CharField(max_length=20)
+    return_date = models.DateField(default=datetime.date.today)
+    return_id = models.CharField(max_length=20)
 
     def __str__(self):
         return self.book_name

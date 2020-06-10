@@ -1,27 +1,27 @@
 {% extends 'libman/base.html' %}
 {% load static %}
-<title>{% block title %} View Issue {% endblock %}</title>
+<title>{% block title %} View Return {% endblock %}</title>
 {% block b_main %}
   <div>
-    <a class="add_new button1" href="{% url 'new_issue' %}">Issue New Book!</a>
+    <a class="add_new button1" href="{% url 'return_book' %}">Return Book!</a>
   </div>
   <div>
-    <a href="{% url 'add_book' %}">Search Issue!</a>
+    <a href="{% url 'add_book' %}">Search Return!</a>
     <input type="text" placeholder="Books, Borrower, ISBN..">
   </div>
 
-  {% if issue %}
+  {% if returns %}
   <table class="layout">
     <thead>
       <th>Isbn no.</th>
       <th>Borrower ID</th>
-      <th>Issue Date</th>
+      <th>Return Date</th>
     </thead>
-  {% for borrow in issue %}
+  {% for return in returns %}
     <tr>
-      <td> {{ borrow.isbn }}</td>
-      <td>{{ borrow.borrower_id }}</td>
-      <td>{{ borrow.issue_date }}</td>
+      <td> {{ return.isbn }}</td>
+      <td>{{ return.borrower_id }}</td>
+      <td>{{ return.return_date }}</td>
     </tr>
   {% endfor %}
   </table>

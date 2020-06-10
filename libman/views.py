@@ -8,7 +8,7 @@ from django.db.models import Q
 from .decorators import unauthenticated_user, librarian_only, student_only
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
-
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -187,8 +187,12 @@ def add_employer(request):
 
 
 def view_issue(request):
-    issue = Issue.objects.order_by('borrower_name', 'issue_date')
+    issue = Issue.objects.order_by('borrower_id', 'issue_date')
     return render(request, 'libman/view_issue.html', {'issue': issue})
+
+def view_return(request):
+    returns = Return.objects.order_by('borrower_id', 'return_date')
+    return render(request, 'libman/view_return.html', {'returns': returns})
 
 
 @login_required(login_url='/student_login/')
@@ -197,12 +201,20 @@ def new_issue(request):
     if request.method == 'POST':
         i_form = IssueForm(request.POST)
         if i_form.is_valid():
-            name = i_form.cleaned_data['borrower_id']
-            book = i_form.cleaned_data['isbn']
-            i_form.save(commit=True)
-            books = Books.objects.get(isbn_no=book)
-            Books.Claimbook(books)
-            return redirect('view_issue')
+            bid = i_form.cleaned_data['borrower_id']
+            bookid = i_form.cleaned_data['book_id']
+            borrower = get_object_or_404(Sborrower, pk=bid)
+            if borrower:
+                book = get_object_or_404(Books, pk=bookid)
+                if book:
+                    i_form.save(commit=True)
+                    books = Books.objects.get(book_id=bookid)
+                    Books.Claimbook(books)
+                    return redirect('view_issue')
+                else:
+                    return HttpResponse('Book with this id is not registered')
+            else:
+                return HttpResponse('student with this id is not registered')
     else:
         i_form = IssueForm()
     return render(request, 'libman/new_issue.html', {'i_form': i_form})
@@ -214,13 +226,20 @@ def return_book(request):
     if request.method == 'POST':
         r_form = ReturnForm(request.POST)
         if r_form.is_valid():
-            r_form.save(commit=True)
-            book = r_form.cleaned_data['isbn_no']
-            books = Books.objects.get(isbn_no=book)
-            b_id = r_form.cleaned_data['borrower_id']
-            Books.Addbook(books)
-            Issue.objects.filter(borrower_id=b_id, isbn=book).delete()
-            return redirect('return_book')
+            bid = r_form.cleaned_data['borrower_id']
+            bookid = r_form.cleaned_data['book_id']
+            borrower = get_object_or_404(Sborrower, pk=bid)
+            if borrower:
+                book = get_object_or_404(Books, pk=bookid)
+                if book:
+                    r_form.save(commit=True)
+                    books = Books.objects.get(book_id=bookid)
+                    Books.Claimbook(books)
+                    return redirect('view_return')
+                else:
+                    return HttpResponse('Book with this id is not registered')
+            else:
+                return HttpResponse('student with this id is not registered')
     else:
         r_form = ReturnForm()
     return render(request, 'libman/return_book.html', {'r_form': r_form})

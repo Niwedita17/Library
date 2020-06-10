@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^employer/add/$', views.add_employer, name='add_employer'),
     #url(r'^profile/$', views.view_profile, name='profile'),
     url(r'^issue/$', views.view_issue, name='view_issue'),
+    url(r'^returns/$', views.view_return, name='view_return'),
     url(r'^issue/new/$', views.new_issue, name='new_issue'),
     url(r'^return_book/$', views.return_book, name='return_book'),
     #url(r'^delete_book/$', views.ViewDeletePost, name='delete_book'),

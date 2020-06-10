@@ -3,7 +3,7 @@
 <title>{% block title %} View Borrower {% endblock %}</title>
 {% block b_main %}
   <div>
-    <a href="{% url 'add_borrower' %}">Add Borrower!</a>
+    <a class="add_new button1" href="{% url 'add_borrower' %}">Add Borrower!</a>
   </div>
   <div>
     <form method="GET" action="{% url 'view_borrower' %}">
