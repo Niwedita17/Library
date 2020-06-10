@@ -54,3 +54,8 @@ The Library Management System has different types of users including students, l
 If any user is unauthorized to view a page or perform an action, they will be shown as a message stating that they are unauthorized as shown in the screenshots of the result section.
 And if the data which the user is requesting doesn’t exist, it will show a 404 error with a message stating the reason.
 
+
+## Installing
+- `git clone https://github.com/Niwedita17/Library.git`
+- `./run.sh`
+
