@@ -201,16 +201,11 @@ def new_issue(request):
             book = i_form.cleaned_data['isbn']
             i_form.save(commit=True)
             books = Books.objects.get(isbn_no=book)
-            semest = Student.objects.get(student_id=name).semester
-            departm = Student.objects.get(student_id=name).depart
             Books.Claimbook(books)
             return redirect('view_issue')
     else:
         i_form = IssueForm()
-    semest = None
-    departm = None
-    sem_book = Semester.objects.filter(sem=semest, depart=departm)
-    return render(request, 'libman/new_issue.html', {'i_form': i_form, 'sem_book': sem_book})
+    return render(request, 'libman/new_issue.html', {'i_form': i_form})
 
 
 @login_required(login_url='/student_login/')
