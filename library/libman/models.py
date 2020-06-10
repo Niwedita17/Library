@@ -99,7 +99,7 @@ class Issue(models.Model):
     issue_id = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.book_name
+        return self.book_id
 
 class Return(models.Model):
     borrower_id = models.CharField(max_length=20)
@@ -108,7 +108,7 @@ class Return(models.Model):
     return_id = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.book_name
+        return self.book_id
 
 class Semester(models.Model):
     SEM = (
